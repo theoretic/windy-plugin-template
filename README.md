@@ -11,10 +11,13 @@ CAPE/CIN numbers mean for your flight. It can also paint those derived values as
 ## Tabs
 
 The right-hand panel has three tabs. The **model selector** and **forecast time
-slider** are shared by Diagram and Layers, so both stay on the same model and
-hour. The slider runs at a **1-hour step** (24-hour clock); on open, a sounding
-is auto-loaded for the **map centre** so the timeline is live before you click
-anything.
+scale** are shared by Diagram and Layers, so both stay on the same model and
+hour. The scale is a scrollable strip of **clickable hour labels** grouped by day
+(24-hour clock, **1-hour step**) — click any label to jump to that time, use the
+`‹` / `›` buttons or the ←/→ keys to step, and the picked hour stays centred.
+Hours outside the soarable window (before 06 and from 21) are dimmed. On open, a
+sounding is auto-loaded for the **map centre** so the timeline is live before you
+click anything.
 
 ### Diagram
 
@@ -108,7 +111,7 @@ windy.com client code):
 - The native sounding then follows the 1-hour timeline by **linearly
   interpolating every level between the two bracketing forecast profiles**. The
   plugin does the same (`interpolateTo1h` in `src/lib/windyData.ts`), so the
-  slider reads 1 h on any account; it is a no-op when the payload is already
+  scale reads 1 h on any account; it is a no-op when the payload is already
   hourly.
 - Map overlays deliberately stay on 3-hour fetches to keep grid payloads small;
   a nearest-profile lookup bridges the step mismatch.
@@ -133,7 +136,7 @@ src/
     heatmap.ts         grid → canvas → L.ImageOverlay on the map
   components/
     Sounding.svelte    the interactive d3 Skew-T (zoom/pan/hover)
-    TimeSlider.svelte  forecast-hour scrubber
+    TimeSlider.svelte  forecast-hour scale (clickable per-hour labels by day)
     Explainer.svelte   expandable explanation cards
     Guide.svelte       the Guide tab
     MapLayers.svelte   the Layers tab (controls, sampling, legend)
